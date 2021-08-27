@@ -11,6 +11,12 @@ const db = require('./config/connection');
 const questions = require('./questions/questions');
 
 
+db.connect((err) => {
+    if (err) throw error;
+    introLog();
+})
+
+
 // function mainMenu() {
 //     let results;
 
@@ -25,4 +31,8 @@ const questions = require('./questions/questions');
 
 // }
 
-console.log(chalk.magenta("This is a test"));
+function introLog() {
+    console.log(chalk.cyan(`=========================================================================================`));
+    console.log(chalk.cyan(figlet.textSync(`Employee Tracker`, {font: "slant"})));
+    console.log(chalk.cyan(`=========================================================================================`));
+}

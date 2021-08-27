@@ -12,7 +12,7 @@ const connection = mysql.createConnection(
     password: process.env.DB_PASS,
     database: process.env.DB_NAME
   },
-  console.log(`Connected to the employees_db database.`)
+  console.log(`Connected to the ${process.env.DB_NAME} database.`)
 );
 
 module.exports = connection;
