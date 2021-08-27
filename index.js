@@ -14,22 +14,23 @@ const questions = require('./questions/questions');
 db.connect((err) => {
     if (err) throw error;
     introLog();
+    mainMenu();
 })
 
 
-// function mainMenu() {
-//     let results;
-
-//     // Always ask at least one question
-//     do {
-//         results = await inquirer.prompt(questions)
+function mainMenu() {
+    let results = inquirer.prompt(questions)
         
-//             .then()
+        .then((response) => {
+            const { choices } = response;
+        })
 
+        .catch((err) => {
+            console.error(err);
+        })
 
-//     } while (results.choice !== "Quit");
+}
 
-// }
 
 function introLog() {
     console.log(chalk.cyan(`=========================================================================================`));
