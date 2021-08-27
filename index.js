@@ -75,8 +75,9 @@ function viewAllRoles() {
 
 function viewAllEmployees() {
     db.promise().query(`
-        SELECT id, first_name, last_name, role_id 
-        FROM employees
+        SELECT e.id, first_name, last_name, role_id
+        FROM employees e
+        JOIN roles r ON e.role_id = r.id
         `)
     .then( ([rows]) => {
       console.log("\n");
@@ -91,6 +92,7 @@ function quit() {
 }
 
 
+// Show formatted "Employee Tracker" using Figlet
 function introLog() {
     console.log(chalk.cyan(`=========================================================================================`));
     console.log(chalk.cyan(figlet.textSync(`Employee Tracker`, {font: "slant"})));
