@@ -1,9 +1,28 @@
-// Import inquirer package
+// Import packages
 const inquirer = require('inquirer');
+const cTable = require('console.table');
+const chalk = require('chalk');
+const figlet = require('figlet');
 
 // Import db connection
 const db = require('./config/connection');
 
-// Questions for user
+// Import questions for user
 const questions = require('./questions/questions');
 
+
+// function mainMenu() {
+//     let results;
+
+//     // Always ask at least one question
+//     do {
+//         results = await inquirer.prompt(questions)
+        
+//             .then()
+
+
+//     } while (results.choice !== "Quit");
+
+// }
+
+console.log(chalk.magenta("This is a test"));
