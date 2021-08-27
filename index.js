@@ -10,7 +10,7 @@ const db = require('./config/connection');
 // Import questions for user
 const questions = require('./questions/questions');
 
-
+// Upon start, log "Employee Tracker" and prompt for user input
 db.connect((err) => {
     if (err) throw error;
     introLog();
@@ -18,11 +18,19 @@ db.connect((err) => {
 })
 
 
+// Menu to prompt for user input
 function mainMenu() {
-    let results = inquirer.prompt(questions)
+    inquirer.prompt(questions)
         
         .then((response) => {
-            const { choices } = response;
+
+            switch (response.choice) {
+                case "View all departments":
+                    viewAllDepartments();
+                    break;
+            }
+
+
         })
 
         .catch((err) => {
@@ -37,3 +45,15 @@ function introLog() {
     console.log(chalk.cyan(figlet.textSync(`Employee Tracker`, {font: "slant"})));
     console.log(chalk.cyan(`=========================================================================================`));
 }
+
+function viewAllDepartments() {
+    db.promise().query("SELECT * FROM departments")
+    .then( ([rows]) => {
+      console.log("\n");
+      console.table(rows);
+    })
+    .catch(console.log)
+    .then( () => mainMenu());
+}
+
+
