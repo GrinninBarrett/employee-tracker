@@ -2,7 +2,7 @@ const db = require('../config/connection');
 
 const {viewAllDepartments, addDepartment} = require('./departments');
 const {viewAllRoles, addRole} = require('./roles');
-const {viewAllEmployees, allManagers, addEmployee} = require('./employees');
+const {viewAllEmployees, addEmployee} = require('./employees');
 
 
 function quit() {

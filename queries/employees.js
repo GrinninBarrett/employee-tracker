@@ -29,7 +29,20 @@ function viewAllEmployees() {
 
 async function addEmployee() {
     const response = await inquirer.prompt(addEmployeeQuestions)
-    console.log(response);   
+    console.log(response);
+    // db.promise().query(`
+    //     SELECT * FROM roles
+    // `)
+    // .then(([rows]) => {
+    //     let allRoles = JSON.parse(JSON.stringify(rows));
+    //     allRoles.filter(role => {
+    //         role.title === response.role;
+    //     });
+    //     console.log(allRoles);
+    // })
 }
+
+
+// TODO: Add function to update employee role
 
 module.exports = {viewAllEmployees, addEmployee};

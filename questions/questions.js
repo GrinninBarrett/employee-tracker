@@ -1,5 +1,11 @@
 const db = require('../config/connection');
 
+const {
+    getAllDepartments,
+    getAllRoles,
+    getAllManagers
+} = require('../helpers/helpers');
+
 
 // Questions for user input
 const mainMenuOptions = [
@@ -42,9 +48,10 @@ const addRoleQuestions = [
         message: "What is the salary for this role?"
     },
     {
+        //TODO: Change to list type using getAllDepartments as helper for choices
         name: "newRoleDepartment",
         type: "input",
-        message: "Which department will this role be part of?"
+        message: "Which department does this role belong to?"
     }
 ];
 
@@ -61,6 +68,7 @@ const addEmployeeQuestions = [
         message: "What is the employee's last name?"
     },
     {
+        // TODO: Change to list type with getAllRoles helper for choices
         name: "role",
         type: "input",
         message: "What is the employee's role?"
@@ -72,33 +80,6 @@ const addEmployeeQuestions = [
         choices: getAllManagers
     }
 ]
-
-
-// Function to return an array of all managers
-// Put here because the circular dependency was causing errors
-function getAllManagers() {
-    let managerArray = [];
-    return db.promise().query(`
-        SELECT CONCAT(m.first_name, ' ' ,m.last_name) AS manager
-        FROM employees m
-        WHERE m.manager_id IS null
-        `)
-    .then( ([rows]) => {
-        let allManagers = JSON.parse(JSON.stringify(rows));
-        allManagers.forEach(manager => {
-            managerArray.push(manager.manager);
-        });
-        return managerArray;
-    })
-    .then((managerArray) => {
-        return managerArray;
-    })
-    .catch(err => {
-        if (err) {
-            console.log(err);
-        }
-    })
-}
 
 
 
