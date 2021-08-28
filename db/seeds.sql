@@ -8,7 +8,7 @@ VALUES ("Engineering"),
 
 
 -- Roles seeds
-INSERT INTO roles (title, salary, deparment_id)
+INSERT INTO roles (title, salary, department_id)
 VALUES  ("Engineering Manager", 175000, 1),
         ("Marketing Manager", 185000, 2),
         ("Sales Manager", 165000, 3),
