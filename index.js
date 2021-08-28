@@ -17,6 +17,7 @@ const {
     viewAllRoles,
     addRole,
     viewAllEmployees,
+    addEmployee,
     quit 
 } = require('./queries/index');
 
@@ -27,7 +28,6 @@ db.connect((err) => {
     introLog();
     mainMenu();
 })
-
 
 // Menu to prompt for user input
 function mainMenu() {

@@ -1,4 +1,7 @@
 const db = require('../config/connection');
+const inquirer = require('inquirer');
+const { addEmployeeQuestions } = require('../questions/questions');
+
 
 
 function viewAllEmployees() {
@@ -23,4 +26,10 @@ function viewAllEmployees() {
     })
 }
 
-module.exports = viewAllEmployees;
+
+async function addEmployee() {
+    const response = await inquirer.prompt(addEmployeeQuestions)
+    console.log(response);   
+}
+
+module.exports = {viewAllEmployees, addEmployee};
