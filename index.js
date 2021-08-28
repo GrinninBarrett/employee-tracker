@@ -10,7 +10,15 @@ const db = require('./config/connection');
 // Import questions for user
 const {mainMenuOptions} = require('./questions/questions');
 
-const { viewAllDepartments, addDepartment, viewAllRoles, viewAllEmployees, quit } = require('./queries/index');
+// Import all query functions
+const {
+    viewAllDepartments,
+    addDepartment,
+    viewAllRoles,
+    addRole,
+    viewAllEmployees,
+    quit 
+} = require('./queries/index');
 
 
 // Upon start, log "Employee Tracker" and prompt for user input

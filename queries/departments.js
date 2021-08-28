@@ -14,15 +14,17 @@ function viewAllDepartments() {
     })
 }
 
+
 async function addDepartment() {
   const response = await inquirer.prompt(addDepartmentQuestions)
-    db.query(`INSERT INTO departments (department_name) VALUES ("${response.department}");`,
-      (err, res) => {
-        if (err) {
-          console.log(err);
-        }
-      })
-    console.log(`\nSuccessfully added the ${response.department} department!\n`);
-
+  db.query(`INSERT INTO departments (department_name) VALUES ("${response.department}");`,
+    (err) => {
+      if (err) {
+        console.log(err);
+      }
+    })
+  console.log(`\nSuccessfully added the ${response.department} department!\n`);
 }
+
+
 module.exports = {viewAllDepartments, addDepartment};
