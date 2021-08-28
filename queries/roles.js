@@ -36,8 +36,8 @@ async function addRole() {
                     console.log(err);
                 }
             })
-            console.log(`\nSuccessfully added the ${response.newRole} role!`);
         })
+        .then(console.log(`\nSuccessfully added the ${response.newRole} role!\n`))
         .catch(err => {
             if (err) {
                 console.log(err);
