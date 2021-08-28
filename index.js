@@ -10,6 +10,8 @@ const db = require('./config/connection');
 // Import questions for user
 const questions = require('./questions/questions');
 
+const { viewAllDepartments, viewAllRoles, viewAllEmployees, quit } = require('./queries/queries');
+
 
 // Upon start, log "Employee Tracker" and prompt for user input
 db.connect((err) => {
@@ -27,15 +29,15 @@ function mainMenu() {
 
             switch (response.choice) {
                 case "View all departments":
-                    viewAllDepartments();
+                    viewAllDepartments().then(() => mainMenu());
                     break;
 
                 case "View all roles":
-                    viewAllRoles();
+                    viewAllRoles().then(() => mainMenu());
                     break;
 
                 case "View all employees":
-                    viewAllEmployees();
+                    viewAllEmployees().then(() => mainMenu());
                     break;
 
                 case "Add a department":
@@ -65,50 +67,7 @@ function mainMenu() {
 }
 
 
-function viewAllDepartments() {
-    db.promise().query("SELECT * FROM departments")
-    .then( ([rows]) => {
-      console.log("\n");
-      console.table(rows);
-    })
-    .catch(console.log("Something went wrong"))
-    .then( () => mainMenu());
-}
 
-function viewAllRoles() {
-    db.promise().query("SELECT * FROM roles")
-    .then( ([rows]) => {
-      console.log("\n");
-      console.table(rows);
-    })
-    .catch(console.log("Something went wrong"))
-    .then( () => mainMenu());
-}
-
-function viewAllEmployees() {
-    db.promise().query(`
-        SELECT 
-            e.id, e.first_name, e.last_name, 
-            r.title, r.salary,
-            d.department_name AS department,
-            CONCAT(m.first_name, ' ' ,m.last_name) AS reports_to
-        FROM employees e
-        JOIN roles r ON e.role_id = r.id
-        JOIN departments d ON r.department_id = d.id
-        LEFT JOIN employees m ON e.manager_id = m.id
-        ORDER BY id
-        `)
-    .then( ([rows]) => {
-      console.log("\n");
-      console.table(rows);
-    })
-    .catch(console.log("Something went wrong"))
-    .then( () => mainMenu());
-}
-
-function quit() {
-    db.end();
-}
 
 
 // Show formatted "Employee Tracker" using Figlet
