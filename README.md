@@ -26,6 +26,8 @@ This application is a command-line CMS that uses [MySQL](https://www.npmjs.com/p
 
 ## Challenges
 <!-- TODO: add challenges as they arise -->
+* The first hurdle was learning the correct syntax for using `promise()` in a query. This causes the queries to be asynchronous, which is probably preferable here, but being sure all the correct items were included - in the right order - took longer than I expected.
+* It took a lot of reading to finally understand more about the `JOIN` types in SQL. I was having trouble getting the `viewAllEmployees` query to show all employees, even if their manager type was `null`, and the easy fix to this was to use an `INNER JOIN` rather than a simple `JOIN`.
 
 
 ## Future Development
