@@ -1,5 +1,5 @@
 // Questions for user input
-const questions = [
+const mainMenuOptions = [
     {
         name: "choice",
         type: "list",
@@ -17,4 +17,12 @@ const questions = [
     }
 ];
 
-module.exports = questions;
+const addDepartmentQuestions = [
+    {
+        name: "department",
+        type: "input",
+        message: "What is the name of the department?"
+    }
+];
+
+module.exports = {mainMenuOptions, addDepartmentQuestions};

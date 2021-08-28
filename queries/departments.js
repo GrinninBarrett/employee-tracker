@@ -1,4 +1,6 @@
 const db = require('../config/connection');
+const inquirer = require('inquirer');
+const {addDepartmentQuestions} = require('../questions/questions');
 
 
 function viewAllDepartments() {
@@ -12,4 +14,15 @@ function viewAllDepartments() {
     })
 }
 
-module.exports = viewAllDepartments;
+async function addDepartment() {
+  const response = await inquirer.prompt(addDepartmentQuestions)
+    db.query(`INSERT INTO departments (department_name) VALUES ("${response.department}");`,
+      (err, res) => {
+        if (err) {
+          console.log(err);
+        }
+      })
+    console.log(`\nSuccessfully added the ${response.department} department!\n`);
+
+}
+module.exports = {viewAllDepartments, addDepartment};

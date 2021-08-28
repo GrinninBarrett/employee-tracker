@@ -8,9 +8,9 @@ const figlet = require('figlet');
 const db = require('./config/connection');
 
 // Import questions for user
-const questions = require('./questions/questions');
+const {mainMenuOptions} = require('./questions/questions');
 
-const { viewAllDepartments, viewAllRoles, viewAllEmployees, quit } = require('./queries/index');
+const { viewAllDepartments, addDepartment, viewAllRoles, viewAllEmployees, quit } = require('./queries/index');
 
 
 // Upon start, log "Employee Tracker" and prompt for user input
@@ -23,7 +23,7 @@ db.connect((err) => {
 
 // Menu to prompt for user input
 function mainMenu() {
-    inquirer.prompt(questions)
+    inquirer.prompt(mainMenuOptions)
         
         .then((response) => {
 
@@ -41,15 +41,15 @@ function mainMenu() {
                     break;
 
                 case "Add a department":
-                    addDepartment();
+                    addDepartment().then(() => mainMenu());
                     break;
 
                 case "Add a role":
-                    addRole();
+                    addRole().then(() => mainMenu());
                     break;
 
                 case "Add an employee":
-                    addEmployee();
+                    addEmployee().then(() => mainMenu());
                     break;
 
                 case "Quit":
