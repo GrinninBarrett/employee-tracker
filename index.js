@@ -38,6 +38,18 @@ function mainMenu() {
                     viewAllEmployees();
                     break;
 
+                case "Add a department":
+                    addDepartment();
+                    break;
+
+                case "Add a role":
+                    addRole();
+                    break;
+
+                case "Add an employee":
+                    addEmployee();
+                    break;
+
                 case "Quit":
                     quit();
                     break;
