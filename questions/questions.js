@@ -64,7 +64,7 @@ const addRoleQuestions = [
         message: "What is the salary for this role?",
         validate: salaryInput => {
             if ((isNaN(salaryInput)) || salaryInput.trim().length === 0) {
-                console.log(chalk.red(`\n\nPlease enter at least a one-digit number for the salary.\n`));
+                console.log(chalk.red(`\n\nPlease enter a number of at least one digit for the salary.\n`));
                 return false;
             } 
             return true;
@@ -83,12 +83,26 @@ const addEmployeeQuestions = [
     {
         name: "firstName",
         type: "input",
-        message: "What is the employee's first name?"
+        message: "What is the employee's first name?",
+        validate: firstNameInput => {
+            if (firstNameInput.trim().length === 0) {
+                console.log(chalk.red(`\n\nPlease enter a first name of at least one character.\n`));
+                return false;
+            } 
+            return true;
+        }
     },
     {
         name: "lastName",
         type: "input",
-        message: "What is the employee's last name?"
+        message: "What is the employee's last name?",
+        validate: lastNameInput => {
+            if (lastNameInput.trim().length === 0) {
+                console.log(chalk.red(`\n\nPlease enter a last name of at least one character.\n`));
+                return false;
+            } 
+            return true;
+        }
     },
     {
         // TODO: Change to list type with getAllRoles helper for choices
