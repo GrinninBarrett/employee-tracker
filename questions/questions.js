@@ -107,8 +107,9 @@ const addEmployeeQuestions = [
     {
         // TODO: Change to list type with getAllRoles helper for choices
         name: "role",
-        type: "input",
-        message: "What is the employee's role?"
+        type: "list",
+        message: "What is the employee's role?",
+        choices: getAllRoles
     },
     {
         name: "manager",
