@@ -15,6 +15,7 @@ function viewAllDepartments() {
 }
 
 
+// Add validations to be sure user actually enters some text
 async function addDepartment() {
   const response = await inquirer.prompt(addDepartmentQuestions)
   db.query(`INSERT INTO departments (department_name) VALUES ("${response.department}");`,

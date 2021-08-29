@@ -16,7 +16,6 @@ const mainMenuOptions = [
         choices: [
             "View all departments",
             "View all roles",
-            "View all managers",
             "View all employees",
             "Add a department",
             "Add a role",

@@ -14,7 +14,7 @@ function viewAllRoles() {
     })
 }
 
-
+// Add validation to be sure user actually enters some text
 async function addRole() {
     let newRoleID;
     const response = await inquirer.prompt(addRoleQuestions)
