@@ -29,6 +29,8 @@ const mainMenuOptions = [
     }
 ];
 
+
+//Question for adding a new department
 const addDepartmentQuestions = [
     {
         name: "department",
@@ -45,6 +47,7 @@ const addDepartmentQuestions = [
 ];
 
 
+// Questions for adding a new role
 const addRoleQuestions = [
     {
         name: "newRole",
@@ -80,6 +83,7 @@ const addRoleQuestions = [
 ];
 
 
+// Question for adding a new employee
 const addEmployeeQuestions = [
     {
         name: "firstName",

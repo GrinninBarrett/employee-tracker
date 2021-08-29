@@ -2,7 +2,7 @@ const db = require('../config/connection');
 
 const {viewAllDepartments, addDepartment} = require('./departments');
 const {viewAllRoles, addRole} = require('./roles');
-const {viewAllEmployees, addEmployee} = require('./employees');
+const {viewAllEmployees, addEmployee, updateEmployeeRole} = require('./employees');
 
 
 function quit() {
@@ -16,5 +16,6 @@ module.exports = {
     addRole,
     viewAllEmployees,
     addEmployee,
+    updateEmployeeRole,
     quit
 };

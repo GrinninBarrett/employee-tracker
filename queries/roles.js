@@ -18,7 +18,7 @@ function viewAllRoles() {
 
 
 async function addRole() {
-    let newRoleID;
+    let newRoleDepartmentID;
     const response = await inquirer.prompt(addRoleQuestions)
 
     db.promise().query(`
@@ -27,13 +27,13 @@ async function addRole() {
         WHERE d.department_name = "${response.newRoleDepartment}";`)
         .then(([rows]) => {
             // Parse the response from the query to get just the id of the department the new role will go into
-            newRoleID = JSON.parse(JSON.stringify(rows))[0].id
-            return newRoleID;
+            newRoleDepartmentID = JSON.parse(JSON.stringify(rows))[0].id
+            return newRoleDepartmentID;
         })
-        .then(newRoleID => {
+        .then(newRoleDepartmentID => {
             db.query(`
             INSERT INTO roles (title, salary, department_id) 
-            VALUES ("${response.newRole}", "${response.salary}", "${newRoleID}")`,
+            VALUES ("${response.newRole}", "${response.salary}", "${newRoleDepartmentID}");`,
             (err) => {
                 if (err) {
                     console.log(err);

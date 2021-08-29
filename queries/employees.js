@@ -29,24 +29,64 @@ function viewAllEmployees() {
 
 
 async function addEmployee() {
+    let managerID;
+    let roleID;
+
     const response = await inquirer.prompt(addEmployeeQuestions)
-    console.log(response);
 
-    // TODO: When inserting, check for whether the user chose "none", in which case, set manger_id to null
+    const employeeFullName = `${response.firstName} ${response.lastName}`;
+    const managerFirstName = response.manager.split(" ")[0];
+    const managerLastName = response.manager.split(" ")[1];
 
-    // db.promise().query(`
-    //     SELECT * FROM roles
-    // `)
-    // .then(([rows]) => {
-    //     let allRoles = JSON.parse(JSON.stringify(rows));
-    //     allRoles.filter(role => {
-    //         role.title === response.role;
-    //     });
-    //     console.log(allRoles);
-    // })
+    if (response.manager === "None") {
+        managerID = null;
+    } else {
+        db.promise().query(`
+            SELECT id
+            FROM employees m
+            WHERE m.first_name = "${managerFirstName}" AND m.last_name = "${managerLastName}";
+        `)
+        .then( ([rows]) => {
+            managerID = JSON.parse(JSON.stringify(rows[0].id));
+            // console.log(managerID);
+            return managerID;
+        })
+        .then( (managerID) => {
+            db.promise().query(`
+                SELECT id
+                FROM roles r
+                WHERE r.title = "${response.role}";
+            `)
+            .then( ([rows]) => {
+                roleID = JSON.parse(JSON.stringify(rows[0].id));
+                let bothIDs = [roleID, managerID];
+                return bothIDs;
+            })
+            .then((bothIDs) => {
+                db.promise().query(`
+                    INSERT INTO employees (first_name, last_name, role_id, manager_id)
+                    VALUES ("${response.firstName.trim()}", "${response.lastName.trim()}", "${bothIDs[0]}", "${bothIDs[1]}");
+                `)
+                .catch(err => {
+                    if (err) {
+                        console.log(err);
+                    }
+                })
+            })
+            .then(console.log(chalk.green(`\nSuccessfully added ${employeeFullName} to the database!\n`)))
+            .catch(err => {
+                if (err) {
+                    console.log(err);
+                }
+            })
+        })
+    }
 }
 
 
 // TODO: Add function to update employee role
+function updateEmployeeRole() {
 
-module.exports = {viewAllEmployees, addEmployee};
+}
+
+module.exports = {viewAllEmployees, addEmployee, updateEmployeeRole};
