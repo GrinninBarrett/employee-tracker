@@ -1,7 +1,7 @@
 const db = require('../config/connection');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
-const { addEmployeeQuestions } = require('../questions/questions');
+const { addEmployeeQuestions, updateEmployeeQuestions } = require('../questions/questions');
 
 
 
@@ -38,8 +38,8 @@ async function addEmployee() {
     const managerFirstName = response.manager.split(" ")[0];
     const managerLastName = response.manager.split(" ")[1];
 
+    // Execute if the new employee has no manager (is a manager themselves)
     if (response.manager === "None") {
-        managerID = null;
         return db.promise().query(`
                 SELECT id
                 FROM roles r
@@ -68,6 +68,7 @@ async function addEmployee() {
         })
     }
 
+    // Execute if the new employee has a manager
     return db.promise().query(`
         SELECT id
         FROM employees m
@@ -111,8 +112,14 @@ async function addEmployee() {
 
 
 // TODO: Add function to update employee role
-function updateEmployeeRole() {
+async function updateEmployeeRole() {
+    const response = await inquirer.prompt(updateEmployeeQuestions);
 
+    console.log(response);
+
+    return db.promise().query(`
+        
+    `)
 }
 
 module.exports = {viewAllEmployees, addEmployee, updateEmployeeRole};

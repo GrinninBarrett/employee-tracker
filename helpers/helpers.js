@@ -1,4 +1,5 @@
 const db = require('../config/connection');
+const { addEmployeeQuestions } = require('../questions/questions');
 
 // Returns an array of all departments, to be used as the choices parameter in inquirer prompt
 function getAllDepartments() {
@@ -53,14 +54,14 @@ function getAllRoles() {
 function getAllManagers() {
     let managersArray = ["None"];
     return db.promise().query(`
-        SELECT id, CONCAT(m.first_name, ' ' ,m.last_name) AS manager
+        SELECT id, CONCAT(m.first_name, ' ' ,m.last_name) AS name
         FROM employees m
         WHERE m.manager_id IS null;
         `)
     .then( ([rows]) => {
         let allManagers = JSON.parse(JSON.stringify(rows));
         allManagers.forEach(manager => {
-            managersArray.push(manager.manager);
+            managersArray.push(manager.name);
         });
         return managersArray;
     })
@@ -74,6 +75,32 @@ function getAllManagers() {
     })
 }
 
+function getAllEmployees() {
+    let employeesArray = [];
+
+    return db.promise().query(`
+        SELECT CONCAT(e.first_name, ' ', e.last_name) AS name
+        FROM employees e
+    `)
+    .then(([rows]) => {
+        let allEmployees = JSON.parse(JSON.stringify(rows));
+        allEmployees.forEach(employee => {
+            employeesArray.push(employee.name);
+        });
+        return employeesArray;
+    })
+    .catch(err => {
+        if (err) {
+            console.log(err);
+        }
+    })
+}
 
 
-module.exports = {getAllDepartments, getAllRoles, getAllManagers}
+
+module.exports = {
+    getAllDepartments,
+    getAllRoles,
+    getAllManagers,
+    getAllEmployees
+}

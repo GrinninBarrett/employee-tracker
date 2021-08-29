@@ -6,7 +6,8 @@ const chalk = require('chalk');
 const {
     getAllDepartments,
     getAllRoles,
-    getAllManagers
+    getAllManagers,
+    getAllEmployees
 } = require('../helpers/helpers');
 
 
@@ -121,7 +122,24 @@ const addEmployeeQuestions = [
         message: "Who is the employee's manager?",
         choices: getAllManagers
     }
-]
+];
+
+
+// Questions for updating an employee's role
+const updateEmployeeQuestions = [
+    {
+        name: "employee",
+        type: "list",
+        message: "Which employee would you like to update?",
+        choices: getAllEmployees
+    },
+    {
+        name: "role",
+        type: "list",
+        message: "What is the employee's new role?",
+        choices: getAllRoles
+    }
+];
 
 
 
@@ -129,5 +147,6 @@ module.exports = {
     mainMenuOptions,
     addDepartmentQuestions,
     addRoleQuestions,
-    addEmployeeQuestions
+    addEmployeeQuestions,
+    updateEmployeeQuestions
 };

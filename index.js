@@ -18,7 +18,8 @@ const {
     addRole,
     viewAllEmployees,
     addEmployee,
-    quit 
+    quit, 
+    updateEmployeeRole
 } = require('./queries/index');
 
 
@@ -58,6 +59,10 @@ function mainMenu() {
 
                 case "Add an employee":
                     addEmployee().then(() => mainMenu());
+                    break;
+
+                case "Update an employee's role":
+                    updateEmployeeRole().then(() => mainMenu());
                     break;
 
                 case "Quit":
