@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const { addEmployeeQuestions, updateEmployeeQuestions } = require('../questions/questions');
 
 
-
+// Shows all employees
 function viewAllEmployees() {
     return db.promise().query(`
         SELECT 
@@ -28,6 +28,7 @@ function viewAllEmployees() {
 }
 
 
+// Adds a new employee
 async function addEmployee() {
     let managerID;
     let roleID;
@@ -111,7 +112,7 @@ async function addEmployee() {
 }
 
 
-// TODO: Add function to update employee role
+// Updates an employee's role
 async function updateEmployeeRole() {
     let employeeID;
     let roleID;
@@ -122,9 +123,6 @@ async function updateEmployeeRole() {
     const employeeFirstName = response.employee.split(" ")[0];
     const employeeLastName = response.employee.split(" ")[1];
     const employeeFullName = response.employee;
-
-    // Find the employee id of the selected employee
-    // Find the role id of the selected role
 
     return db.promise().query(`
         SELECT id

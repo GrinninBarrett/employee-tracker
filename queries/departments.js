@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const {addDepartmentQuestions} = require('../questions/questions');
 
 
+// Shows all departments
 function viewAllDepartments() {
     return db.promise().query("SELECT * FROM departments")
     .then( ([rows]) => {
@@ -16,6 +17,7 @@ function viewAllDepartments() {
 }
 
 
+// Adds a new department
 async function addDepartment() {
   const response = await inquirer.prompt(addDepartmentQuestions)
 

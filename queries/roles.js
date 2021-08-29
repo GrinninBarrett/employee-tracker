@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const {addRoleQuestions} = require('../questions/questions');
 
 
-
+// Shows all roles
 function viewAllRoles() {
     return db.promise().query("SELECT * FROM roles;")
     .then( ([rows]) => {
@@ -17,6 +17,7 @@ function viewAllRoles() {
 }
 
 
+// Adds a new role
 async function addRole() {
     let newRoleDepartmentID;
     const response = await inquirer.prompt(addRoleQuestions)
@@ -47,5 +48,6 @@ async function addRole() {
             }
         })
 }
+
 
 module.exports = {viewAllRoles, addRole};

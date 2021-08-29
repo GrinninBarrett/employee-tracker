@@ -75,6 +75,8 @@ function getAllManagers() {
     })
 }
 
+
+// Returns an array of all employees, to be used as a choices parameter in inquirer prompt
 function getAllEmployees() {
     let employeesArray = [];
 
