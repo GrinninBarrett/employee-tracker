@@ -22,7 +22,7 @@ This application is a command-line CMS that uses [MySQL](https://www.npmjs.com/p
 
 
 ## Functionality
-[App Demonstration Video]()
+[App Demonstration Video](https://youtu.be/6aKivWaZdWI)
 
 #### App Initialization
 * Be sure to first run <code>npm i</code> after cloning this repo or copying its code into your own files.
