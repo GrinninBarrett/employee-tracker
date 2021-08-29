@@ -1,12 +1,29 @@
 const db = require('../config/connection');
 
-// TODO: Create this function
 // Returns an array of all departments, to be used as the choices parameter in inquirer prompt
 function getAllDepartments() {
-
+    let departmentsArray = [];
+    return db.promise().query(`
+        SELECT department_name
+        FROM departments;
+        `)
+    .then( ([rows]) => {
+        let allDepartments = JSON.parse(JSON.stringify(rows));
+        allDepartments.forEach(department => {
+            departmentsArray.push(department.department_name);
+        })
+        return departmentsArray;
+    })
+    .then(departmentsArray => {
+        return departmentsArray;
+    })
+    .catch(err => {
+        if (err) {
+            console.log(err);
+        }
+    })
 }
 
-// TODO: Create this function
 // Returns an array of all Roles, to be used as the choices parameter in inquirer prompt
 function getAllRoles() {
     let rolesArray = [];

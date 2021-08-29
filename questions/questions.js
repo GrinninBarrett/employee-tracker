@@ -73,8 +73,9 @@ const addRoleQuestions = [
     {
         //TODO: Change to list type using getAllDepartments as helper for choices
         name: "newRoleDepartment",
-        type: "input",
-        message: "Which department does this role belong to?"
+        type: "list",
+        message: "Which department does this role belong to?",
+        choices: getAllDepartments
     }
 ];
 
@@ -105,7 +106,6 @@ const addEmployeeQuestions = [
         }
     },
     {
-        // TODO: Change to list type with getAllRoles helper for choices
         name: "role",
         type: "list",
         message: "What is the employee's role?",
