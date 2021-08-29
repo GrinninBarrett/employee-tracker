@@ -1,5 +1,4 @@
 const db = require('../config/connection');
-const { addEmployeeQuestions } = require('../questions/questions');
 
 // Returns an array of all departments, to be used as the choices parameter in inquirer prompt
 function getAllDepartments() {
@@ -24,6 +23,7 @@ function getAllDepartments() {
         }
     })
 }
+
 
 // Returns an array of all Roles, to be used as the choices parameter in inquirer prompt
 function getAllRoles() {
