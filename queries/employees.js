@@ -31,6 +31,9 @@ function viewAllEmployees() {
 async function addEmployee() {
     const response = await inquirer.prompt(addEmployeeQuestions)
     console.log(response);
+
+    // TODO: When inserting, check for whether the user chose "none", in which case, set manger_id to null
+
     // db.promise().query(`
     //     SELECT * FROM roles
     // `)

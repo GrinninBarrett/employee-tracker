@@ -52,7 +52,7 @@ function getAllRoles() {
 // Returns an array of all managers, to be used as the choices parameter in inquirer prompt
 // TODO: Add "none" as the first item in the managerArray
 function getAllManagers() {
-    let managersArray = [];
+    let managersArray = ["None"];
     return db.promise().query(`
         SELECT CONCAT(m.first_name, ' ' ,m.last_name) AS manager
         FROM employees m
