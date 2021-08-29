@@ -79,7 +79,7 @@ async function addEmployee() {
         // console.log(managerID);
         return managerID;
     })
-    .then( (managerID) => {
+    .then( managerID => {
         db.promise().query(`
             SELECT id
             FROM roles r
@@ -90,7 +90,7 @@ async function addEmployee() {
             let bothIDs = [roleID, managerID];
             return bothIDs;
         })
-        .then((bothIDs) => {
+        .then( bothIDs => {
             db.promise().query(`
                 INSERT INTO employees (first_name, last_name, role_id, manager_id)
                 VALUES ("${response.firstName.trim()}", "${response.lastName.trim()}", "${bothIDs[0]}", "${bothIDs[1]}");
@@ -113,13 +113,58 @@ async function addEmployee() {
 
 // TODO: Add function to update employee role
 async function updateEmployeeRole() {
+    let employeeID;
+    let roleID;
     const response = await inquirer.prompt(updateEmployeeQuestions);
 
     console.log(response);
 
+    const employeeFirstName = response.employee.split(" ")[0];
+    const employeeLastName = response.employee.split(" ")[1];
+    const employeeFullName = response.employee;
+
+    // Find the employee id of the selected employee
+    // Find the role id of the selected role
+
     return db.promise().query(`
-        
+        SELECT id
+        FROM employees e
+        WHERE e.first_name = "${employeeFirstName}" AND e.last_name = "${employeeLastName}";
     `)
+    .then( ([rows]) => {
+        employeeID = JSON.parse(JSON.stringify(rows[0].id));
+        return employeeID;
+    })
+    .then( employeeID => {
+        db.promise().query(`
+            SELECT id
+            FROM roles r
+            WHERE r.title = "${response.role}";
+        `)
+        .then( ([rows]) => {
+            roleID = JSON.parse(JSON.stringify(rows[0].id));
+            let bothIDs = [employeeID, roleID];
+            return bothIDs;
+        })
+        .then( bothIDs => {
+            db.promise().query(`
+                UPDATE employees
+                SET role_id = "${bothIDs[1]}"
+                WHERE id = "${bothIDs[0]}";
+            `)
+            .catch(err => {
+                if (err) {
+                    console.log(err);
+                }
+            })
+        })
+    })
+    .then(console.log(chalk.green(`\nSuccessfully updated ${employeeFullName}'s role!\n`)))
+    .catch(err => {
+        if (err) {
+            console.log(err);
+        }
+    })
 }
 
 module.exports = {viewAllEmployees, addEmployee, updateEmployeeRole};
