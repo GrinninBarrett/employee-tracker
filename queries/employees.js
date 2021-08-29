@@ -40,47 +40,73 @@ async function addEmployee() {
 
     if (response.manager === "None") {
         managerID = null;
-    } else {
-        db.promise().query(`
-            SELECT id
-            FROM employees m
-            WHERE m.first_name = "${managerFirstName}" AND m.last_name = "${managerLastName}";
-        `)
-        .then( ([rows]) => {
-            managerID = JSON.parse(JSON.stringify(rows[0].id));
-            // console.log(managerID);
-            return managerID;
-        })
-        .then( (managerID) => {
-            db.promise().query(`
+        return db.promise().query(`
                 SELECT id
                 FROM roles r
                 WHERE r.title = "${response.role}";
             `)
-            .then( ([rows]) => {
-                roleID = JSON.parse(JSON.stringify(rows[0].id));
-                let bothIDs = [roleID, managerID];
-                return bothIDs;
-            })
-            .then((bothIDs) => {
-                db.promise().query(`
-                    INSERT INTO employees (first_name, last_name, role_id, manager_id)
-                    VALUES ("${response.firstName.trim()}", "${response.lastName.trim()}", "${bothIDs[0]}", "${bothIDs[1]}");
-                `)
-                .catch(err => {
-                    if (err) {
-                        console.log(err);
-                    }
-                })
-            })
-            .then(console.log(chalk.green(`\nSuccessfully added ${employeeFullName} to the database!\n`)))
+        .then( ([rows]) => {
+            roleID = JSON.parse(JSON.stringify(rows[0].id));
+            return roleID;
+        })
+        .then((roleID) => {
+            db.promise().query(`
+                INSERT INTO employees (first_name, last_name, role_id, manager_id)
+                VALUES ("${response.firstName.trim()}", "${response.lastName.trim()}", "${roleID}", null);
+            `)
             .catch(err => {
                 if (err) {
                     console.log(err);
                 }
             })
         })
+        .then(console.log(chalk.green(`\nSuccessfully added ${employeeFullName} to the database!\n`)))
+        .catch(err => {
+            if (err) {
+                console.log(err);
+            }
+        })
     }
+
+    return db.promise().query(`
+        SELECT id
+        FROM employees m
+        WHERE m.first_name = "${managerFirstName}" AND m.last_name = "${managerLastName}";
+    `)
+    .then( ([rows]) => {
+        managerID = JSON.parse(JSON.stringify(rows[0].id));
+        // console.log(managerID);
+        return managerID;
+    })
+    .then( (managerID) => {
+        db.promise().query(`
+            SELECT id
+            FROM roles r
+            WHERE r.title = "${response.role}";
+        `)
+        .then( ([rows]) => {
+            roleID = JSON.parse(JSON.stringify(rows[0].id));
+            let bothIDs = [roleID, managerID];
+            return bothIDs;
+        })
+        .then((bothIDs) => {
+            db.promise().query(`
+                INSERT INTO employees (first_name, last_name, role_id, manager_id)
+                VALUES ("${response.firstName.trim()}", "${response.lastName.trim()}", "${bothIDs[0]}", "${bothIDs[1]}");
+            `)
+            .catch(err => {
+                if (err) {
+                    console.log(err);
+                }
+            })
+        })
+        .then(console.log(chalk.green(`\nSuccessfully added ${employeeFullName} to the database!\n`)))
+        .catch(err => {
+            if (err) {
+                console.log(err);
+            }
+        })
+    })
 }
 
 
