@@ -1,6 +1,8 @@
 const db = require('../config/connection');
 const inquirer = require('inquirer');
+const chalk = require('chalk');
 const {addRoleQuestions} = require('../questions/questions');
+
 
 
 function viewAllRoles() {
@@ -14,10 +16,11 @@ function viewAllRoles() {
     })
 }
 
-// Add validation to be sure user actually enters some text
+
 async function addRole() {
     let newRoleID;
     const response = await inquirer.prompt(addRoleQuestions)
+
     db.promise().query(`
         SELECT *
         FROM departments d
@@ -37,7 +40,7 @@ async function addRole() {
                 }
             })
         })
-        .then(console.log(`\nSuccessfully added the ${response.newRole} role!\n`))
+        .then(console.log(chalk.green(`\nSuccessfully added the ${response.newRole} role!\n`)))
         .catch(err => {
             if (err) {
                 console.log(err);

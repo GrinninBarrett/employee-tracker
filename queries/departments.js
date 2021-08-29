@@ -1,5 +1,6 @@
 const db = require('../config/connection');
 const inquirer = require('inquirer');
+const chalk = require('chalk');
 const {addDepartmentQuestions} = require('../questions/questions');
 
 
@@ -15,16 +16,16 @@ function viewAllDepartments() {
 }
 
 
-// Add validations to be sure user actually enters some text
 async function addDepartment() {
   const response = await inquirer.prompt(addDepartmentQuestions)
-  db.query(`INSERT INTO departments (department_name) VALUES ("${response.department}");`,
+
+  db.query(`INSERT INTO departments (department_name) VALUES ("${response.department.trim()}");`,
     (err) => {
       if (err) {
         console.log(err);
       }
     })
-  console.log(`\nSuccessfully added the ${response.department} department!\n`);
+  console.log(chalk.green(`\nSuccessfully added the ${response.department} department!\n`));
 }
 
 

@@ -1,5 +1,6 @@
 const db = require('../config/connection');
 const inquirer = require('inquirer');
+const chalk = require('chalk');
 const { addEmployeeQuestions } = require('../questions/questions');
 
 
